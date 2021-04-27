@@ -1,14 +1,13 @@
 import React, { useState , useEffect } from 'react'
 import axios from 'axios'
-import { Link, useHistory } from 'react-router-dom'
-import { Modal, CardColumns } from 'react-bootstrap'
-import s from 'styled-components'
+import { Card, CardColumns } from 'react-bootstrap'
+
 import '../App.css'
 import NavBar from './NavBar'
 import Meme from './Meme'
 import MemeModal from './MemeModal'
 
-const MakeMeme = () => {
+const MakeMeme = ({setWhich}) => {
 
     const [memes , setMemes] = useState([])
     const [memesShown, setMemesShown] = useState([])
@@ -40,18 +39,17 @@ const MakeMeme = () => {
 
 
 
-    return (<><div>
-        <NavBar /></div>
-        <div className = "inputWrapper">
+    return (<>
+        <Card>
+            <Card.Title style ={{fontFamily : 'Chalkduster'}}>Filter Memes Here</Card.Title>
             <input className = "memeSearch" type = "text" value={search} onChange={e => setSearch(e.target.value)}></input>
-        </div>
+        </Card>
         <div className = "memeSection">
             <CardColumns>
             {memesShown.map(({url, id, name, box_count}) => <Meme id={id} name={name} url ={url} modalFunc = {getMemeAndEdit} box_count = {box_count}/>)}
             </CardColumns>
-        
         </div>
-        <MemeModal editing={editing} url={editingPhoto.url} setEditing={setEditing} width={1000} id = {editingPhoto.id} box_count={editingPhoto.box_count}/></>)
+        <MemeModal editing={editing} url={editingPhoto.url} setEditing={setEditing} width={1000} id = {editingPhoto.id} box_count={editingPhoto.box_count} setWhich ={setWhich}/></>)
 }
 
 export default MakeMeme

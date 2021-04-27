@@ -6,7 +6,8 @@ const postSchema = new Schema({
   author: String,
   image: String,
   comments: [{type : Map, of : String}],
-  timestamp: Number
+  timestamp: Number,
+  caption : String
 })
 
 const Post = model('Post', postSchema)

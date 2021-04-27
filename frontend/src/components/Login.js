@@ -29,7 +29,7 @@ const Login = () => {
         e.preventDefault()
         const { data } = await axios.post('/account/login', { username, password })
         if (data === 'success') {
-            history.push('/makeMeme')
+            history.push('/home')
         }
         else {
           // eslint-disable-next-line no-alert
@@ -55,7 +55,7 @@ const Login = () => {
                             <Form.Label>Password:</Form.Label>
                             <Form.Control type="password" value={password} onChange={e => setPassword(e.target.value)} />
                         </Form.Group>
-                    <Button className="signupButton" onClick={e => loginUser(e)}>Login</Button>
+                    <button className="signupButton" onClick={e => loginUser(e)}>Login</button>
                 </Form>
                 <div className = "footer">Don't have an account? Sign up <Link to="/signup">here!</Link></div>
                 </div>

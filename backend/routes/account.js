@@ -25,6 +25,9 @@ router.post('/login', async (req, res, next) => {
     else if (!data) res.send('The username and password are not found')
     else {
       req.session.username = username
+      console.log(data)
+      console.log(data)
+      req.session.friends = data.friends
       res.send('success')
     }
   })
@@ -32,6 +35,7 @@ router.post('/login', async (req, res, next) => {
 
 router.post('/logout', isAuthenticated, (req, res) => {
   req.session.username = null
+  req.session.friends = null
   res.send('NO ONE IS LOGGED IN')
 })
 

@@ -7,13 +7,14 @@ import { Link, useHistory } from 'react-router-dom'
 
 //const imgflipper = new Imglfip({username:'alexrand2018', password: 'alexrand2018'})
 
-const MemeModal = ({editing, setEditing, id , url, name, box_count, height, width}) => {
+const MemeModal = ({editing, setEditing, id , url, name, box_count, height, width, setWhich}) => {
     
     const [boxes, setBoxes] = useState([])
     const [captions, setCaptions] = useState([])
     const [imgUrl, setImgUrl] = useState('')
     const [background, setBackground] = useState('#ecf1f5')
     const [hasEdited, setHasEdited] = useState(false)
+    const [caption, setCaption] = useState('')
 
     const history = useHistory()
 
@@ -43,10 +44,11 @@ const MemeModal = ({editing, setEditing, id , url, name, box_count, height, widt
             box_clone[idx] = {...box, color : encodeURIComponent(background)}
         })
         setBoxes(box_clone)
-        const {data} = await axios.post('/api/makeMeme', {id, box_array : box_clone})
+        const {data} = await axios.post('/api/makeMeme', {id, box_array : box_clone, caption : caption})
         console.log(data)
-        if (data.success === true) {
-            history.push('/yourMemes')
+        if (data === 'success') {
+            setWhich({'home' : false, 'makeMeme' : false, 'yourMemes' : true})
+            history.push('/home')
         }
     }
 
@@ -63,10 +65,19 @@ const MemeModal = ({editing, setEditing, id , url, name, box_count, height, widt
         </Modal.Header>
         <Modal.Body className = "modalBody">
             <img src={url} style ={imgStyle}/>
-            {boxes.map(({text}, idx) => (<input type = "text" value = {text} onChange = {(e) => setBoxText(idx , e.target.value)}></input>))
+            {boxes.map(({text}, idx) => (<div className = "textInput">
+                <div className = "boxNumber">Box {idx + 1} Text</div>
+                <textarea type = "text" value = {text} onChange = {(e) => setBoxText(idx , e.target.value)}/ >
+                </div>))
             }
-            <CompactPicker color={background} onChangeComplete = {(color) => (setBackground(color.hex))}/>
-            <button onClick = {(e) => (memify(e))}></button>
+            <div>Caption</div>
+            <textarea type = "text" value = {caption} onChange = {(e) => setCaption(e.target.value)} />
+            <div className = "bottomPanel">
+            <div className = "colorChooser">
+            <div style = {{margin: '0 auto', display: 'flex'}}><CompactPicker color={background} style = {{width: `100%`, backgroundColor : 'blue'}} onChangeComplete = {(color) => (setBackground(color.hex))}/></div>
+            </div>
+            <button className = "memeButton" onClick = {(e) => (memify(e))}>Memify!</button>
+            </div>
         </Modal.Body>
     </Modal>)
 }

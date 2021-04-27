@@ -27,7 +27,7 @@ const Signup = () => {
     const signUpUser = async e => {
         e.preventDefault()
         const { data } = await axios.post('/account/signup', { username, password })
-        if (data === 'success') history.push('/makeMeme')
+        if (data === 'success') history.push('/home')
         else {
           // eslint-disable-next-line no-alert
           alert('There was an error logging in')
@@ -52,7 +52,7 @@ const Signup = () => {
                             <Form.Label>Password:</Form.Label>
                             <Form.Control type="password" value={password} onChange={e => setPassword(e.target.value)} />
                         </Form.Group>
-                    <Button className="signupButton" onClick={e => signUpUser(e)}>Sign Up</Button>
+                    <button className="signupButton" onClick={e => signUpUser(e)}>Sign Up</button>
                 </Form>
                 <div className = "footer">Already have an account? Login <Link to="/login">here!</Link></div>
                 </div>
