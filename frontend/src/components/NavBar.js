@@ -1,9 +1,9 @@
 import React, { useState , useEffect } from 'react'
 import axios from 'axios'
 import 'font-awesome/css/font-awesome.min.css';
-import { Link, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import { Navbar, Nav , Form} from 'react-bootstrap'
-import { Check , Plus } from 'react-bootstrap-icons'
+import { Plus } from 'react-bootstrap-icons'
 import s from 'styled-components'
 
 const NavBar = ({which, setWhich , username}) => {

@@ -1,8 +1,7 @@
 import React, { useState , useEffect } from 'react'
 import axios from 'axios'
 import { Link, useHistory } from 'react-router-dom'
-import { Form, Button, Card } from 'react-bootstrap'
-import s from 'styled-components'
+import { Form } from 'react-bootstrap'
 import '../App.css'
 
 const Signup = () => {
@@ -30,7 +29,7 @@ const Signup = () => {
         if (data === 'success') history.push('/home')
         else {
           // eslint-disable-next-line no-alert
-          alert('There was an error logging in')
+          alert('There was an error signing up')
           setUsername('')
           setPassword('')
         }

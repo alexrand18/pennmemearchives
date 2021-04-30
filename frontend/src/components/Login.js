@@ -1,7 +1,7 @@
 import React, { useState , useEffect } from 'react'
 import axios from 'axios'
 import { Link, useHistory } from 'react-router-dom'
-import { Form, Button, Card } from 'react-bootstrap'
+import { Form } from 'react-bootstrap'
 import s from 'styled-components'
 import '../App.css'
 

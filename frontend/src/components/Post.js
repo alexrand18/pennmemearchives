@@ -1,6 +1,6 @@
 import React, { useState , useEffect } from 'react'
 import { Card } from 'react-bootstrap'
-import {ChatDots} from 'react-bootstrap-icons'
+import { ChatDots } from 'react-bootstrap-icons'
 import '../App.css'
 import 'font-awesome/css/font-awesome.min.css';
 import axios from 'axios'

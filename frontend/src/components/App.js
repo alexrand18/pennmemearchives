@@ -1,15 +1,12 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Link,
 } from 'react-router-dom'
-import NavBar from './NavBar'
 import Login from './Login'
 import Signup from './Signup'
-import MakeMeme from './makeMeme'
-import YourMemes from './yourMemes'
 import Home from './Home'
 
 const App = () => (
@@ -32,10 +29,3 @@ const App = () => (
 
 
 export default App
-
-/*<Route path="/makeMeme">
-          <MakeMeme />
-        </Route>
-        <Route path="/yourMemes">
-          <YourMemes />
-        </Route>*/

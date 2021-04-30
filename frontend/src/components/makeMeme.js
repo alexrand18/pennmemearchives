@@ -3,7 +3,6 @@ import axios from 'axios'
 import { Card, CardColumns } from 'react-bootstrap'
 
 import '../App.css'
-import NavBar from './NavBar'
 import Meme from './Meme'
 import MemeModal from './MemeModal'
 
@@ -16,7 +15,7 @@ const MakeMeme = ({setWhich}) => {
     const [editingPhoto, setEditingPhoto] = useState({})
 
     useEffect(async() => {
-       const {data} = await axios.get('/api/getMemes')
+       const { data } = await axios.get('/api/getMemes')
        setMemes(data)
        setMemesShown(data)
     }, [])
@@ -35,8 +34,6 @@ const MakeMeme = ({setWhich}) => {
         setEditing(true)
         setEditingPhoto(meme)
     }
-
-
 
 
     return (<>

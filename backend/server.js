@@ -4,12 +4,31 @@ const path = require('path')
 const http = require('http')
 const accountRouter = require('./routes/account')
 const apiRouter = require('./routes/api')
+const socketIo = require('socket.io')
+const mongoose = require('mongoose')
 
 const app = express()
 const port = process.env.PORT || 3000
 const server = http.createServer(app)
+const io = socketIo(server, {
+  cors: {
+    origin: 'http://localhost:3000',
+    methods: ['GET', 'POST'],
+  },
+})
 
+io.on('connection', socket => {
+  socket.on('addNewMeme', meme => {
+    io.emit('getNewMeme', meme)
+  })
+  /*socket.on('answeredQuestion', info => {
+    io.emit('getNewAnswer', info)
+  })*/
+  socket.on('disconnect', () => console.log('disconnected'))
+})
 
+const MONGO_URI = process.env.MONGODB_URI || 'mongodb+srv://ahr18:ahr18@cluster0.bq2wq.mongodb.net/Meme?retryWrites=true&w=majority'
+mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
 
 app.use(express.json())
 app.use(express.static('dist'))

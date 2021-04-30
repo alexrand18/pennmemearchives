@@ -3,17 +3,31 @@ import axios from 'axios'
 
 import '../App.css'
 import Post from './Post'
+import io from 'socket.io-client'
+
+const socket = io.connect('http://localhost:3000')
 
 
 const Feed = () => {
 
     const [posts, setPosts] = useState([])
+    const [socketInfo, setSocketInfo] = useState('')
 
     useEffect(async () => {
         const { data } = await axios.get('/api/getMyFriendsMemes')
-        console.log(data)
         setPosts(data)
+        socket.on('getNewMeme', meme => {
+            setSocketInfo(meme)
+        })
     }, [])
+
+    useEffect(async () => {
+        const isFriend = await axios.post('/api/isFriend' , {user : socketInfo.author})
+        if (isFriend.data === true) {
+            setPosts([socketInfo , ...posts])
+        }
+    }, [socketInfo])
+
 
     return (<><div className = "container-fluid">
         <div className = "row">

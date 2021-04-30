@@ -14,11 +14,8 @@ const Home = () => {
 
     const history = useHistory()
 
-
-
     useEffect(async () => {
         const {data} = await axios.get('/api/loggedInUser')
-        console.log(data)
         if (data === 'not logged in') {
             history.push('/login')
         } else {

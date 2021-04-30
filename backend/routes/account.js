@@ -25,8 +25,6 @@ router.post('/login', async (req, res, next) => {
     else if (!data) res.send('The username and password are not found')
     else {
       req.session.username = username
-      console.log(data)
-      console.log(data)
       req.session.friends = data.friends
       res.send('success')
     }

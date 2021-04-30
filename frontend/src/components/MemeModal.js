@@ -1,31 +1,27 @@
 import React, { useState , useEffect } from 'react'
-import { Form, Modal } from 'react-bootstrap'
+import { Modal } from 'react-bootstrap'
 import '../App.css'
 import axios from 'axios'
 import { CompactPicker } from 'react-color'
-import { Link, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
+import io from 'socket.io-client'
 
-//const imgflipper = new Imglfip({username:'alexrand2018', password: 'alexrand2018'})
+const socket = io.connect('http://localhost:3000')
 
-const MemeModal = ({editing, setEditing, id , url, name, box_count, height, width, setWhich}) => {
+
+const MemeModal = ({editing, setEditing, id , url, box_count, height, width, setWhich}) => {
     
     const [boxes, setBoxes] = useState([])
-    const [captions, setCaptions] = useState([])
-    const [imgUrl, setImgUrl] = useState('')
     const [background, setBackground] = useState('#ecf1f5')
-    const [hasEdited, setHasEdited] = useState(false)
     const [caption, setCaption] = useState('')
 
     const history = useHistory()
 
     useEffect(() => {
         let b = []
-        let c = []
         for (let i = 0; i < box_count; i++) {
             b.push({text : '', color : ''})
-            c.push('')
         }
-        setCaptions(c)
         setBoxes(b)
     }, [editing])
 
@@ -37,16 +33,14 @@ const MemeModal = ({editing, setEditing, id , url, name, box_count, height, widt
 
     const memify = async e => {
         e.preventDefault()
-        const font = 'Arial'
-        const color = '#FFA500'
         const box_clone = [...boxes]
         box_clone.forEach((box , idx) => {
             box_clone[idx] = {...box, color : encodeURIComponent(background)}
         })
         setBoxes(box_clone)
-        const {data} = await axios.post('/api/makeMeme', {id, box_array : box_clone, caption : caption})
-        console.log(data)
-        if (data === 'success') {
+        const { data } = await axios.post('/api/makeMeme', {id, box_array : box_clone, caption : caption})
+        socket.emit('addNewMeme', data)
+        if (data !== null) {
             setWhich({'home' : false, 'makeMeme' : false, 'yourMemes' : true})
             history.push('/home')
         }
